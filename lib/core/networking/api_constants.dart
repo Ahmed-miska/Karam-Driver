@@ -11,13 +11,11 @@ class ApiConstants {
   static const String getShowCommercialNotifications = '/api/users/show_commercial_notifications';
   static const String getPage = '/api/pages/get_page';
   static const String contactUs = '/api/contact_us/send';
-  static const String getOrders = '/api/clients_orders/my_orders';
-    static const String getOrderDetails = '/api/clients_orders/order_details';
+  static const String getOrders = '/api/drivers_orders/my_orders';
+  static const String getOrderDetails = '/api/drivers_orders/order_details';
   static const String cancelOrder = '/api/clients_orders/change_order_status';
 
-
-  static const String orederStatus = '/api/clients_orders/order_status';
-
+  static const String orederStatus = '/api/drivers_orders/order_status';
 }
 
 class ApiErrors {
