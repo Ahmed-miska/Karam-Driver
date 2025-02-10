@@ -1,0 +1,138 @@
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:karam_driver/core/networking/api_response.dart';
+
+import '../../../core/helpers/binging_helper.dart';
+import '../../../core/helpers/functions.dart';
+import '../../../core/networking/api_error_handler.dart';
+import '../../../core/widgets/custom_snack_bar.dart';
+import '../data/models/areas_list_model.dart';
+import '../data/models/sign_up_request_model.dart';
+import '../data/models/sign_up_response_model.dart';
+import '../data/repo/sign_up_repo.dart';
+
+
+class SignUpController extends GetxController {
+  final SignUpRepo signUpRepo;
+  List<AreasItem> areasList = [];
+
+  SignUpController(this.signUpRepo);
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController areaController = TextEditingController();
+  final FocusNode nameFocusNode = FocusNode();
+  final FocusNode phoneFocusNode = FocusNode();
+  final FocusNode addressFocusNode = FocusNode();
+  final FocusNode locationFocusNode = FocusNode();
+  final FocusNode cityFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
+  final FocusNode confirmPasswordFocusNode = FocusNode();
+  final FocusNode areaFocusNode = FocusNode();
+  String areaID = '1'.obs.toString();
+
+  final formKey = GlobalKey<FormState>();
+  var isLoading = false.obs;
+  var selectedCity = ''.obs;
+  String lat = '';
+  String long = '';
+
+  SignUpResponseModel? signUpResponseModel;
+  AreasListResponseModel? areasListResponseModel;
+  var error = '';
+  @override
+  void onInit() async {
+    addressController.text = 'بابل - الحله';
+    super.onInit();
+  }
+
+  Future<void> getAreasList(int page, String keyword) async {
+    error = '';
+    update();
+    ApiResponse response = await signUpRepo.getAreasList(page: page, keyword: keyword);
+    if (response.response != null && response.response!.statusCode == 200) {
+      if (response.response!.data['response_code'] == 200) {
+        if (response.response!.data['response_data'] != '') {
+          areasListResponseModel = AreasListResponseModel.fromJson(response.response!.data);
+          areasList.addAll(areasListResponseModel!.responseData!);
+          update(); // Replace the list
+          print('Data updated');
+          update();
+        } else {
+          error = 'لا يوجد منطقة مطابقة';
+          update();
+        }
+      } else {
+        customSnackbar('خطأ', response.response!.data['response_message']);
+      }
+    } else {
+      customSnackbar('خطأ', 'خطاء فى تحميل المنطقة');
+    }
+  }
+
+  Future<void> signUp() async {
+    Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
+    ApiResponse response = await signUpRepo.signUp(
+      SignUpRequestModel(
+        fullName: nameController.text,
+        mobile: phoneController.text,
+        password: passwordController.text,
+        address: addressController.text,
+        location: locationController.text,
+        areaID: areaID,
+      ),
+    );
+    Get.back();
+
+    if (response.response != null && response.response!.statusCode == 200) {
+      if (response.response!.data['response_code'] == 200) {
+        signUpResponseModel = SignUpResponseModel.fromJson(response.response!.data);
+        if (signUpResponseModel != null && signUpResponseModel!.responseCode == 200) {
+          customSnackbar('تم', signUpResponseModel!.responseMessage);
+
+          print(signUpResponseModel!.responseData!.fullName);
+          Get.toNamed(AppRoutes.otpPageURL, arguments: [phoneController.text, 'signUp']);
+        } else {
+          customSnackbar('خطأ', signUpResponseModel!.responseMessage);
+        }
+      } else {
+        customSnackbar('خطأ', response.response!.data['response_message']);
+      }
+    } else {
+      var error = ApiErrorHandler.handle(response.response);
+      customSnackbar('خطأ', error.responseMessage!);
+    }
+  }
+
+  Future<void> fetchAndSetLocation() async {
+    try {
+      isLoading.value = true;
+      Position position = await getCurrentPosition();
+      lat = position.latitude.toString();
+      long = position.longitude.toString();
+      locationController.text = '$lat,$long';
+    } catch (e) {
+      customSnackbar('خطأ', e.toString()); // Show error message to the user
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void liveLocation() {
+    LocationSettings locationSettings = const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+    );
+
+    Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position position) {
+      lat = position.latitude.toString();
+      long = position.longitude.toString();
+      locationController.text = 'lat: $lat,long: $long';
+    });
+  }
+}
