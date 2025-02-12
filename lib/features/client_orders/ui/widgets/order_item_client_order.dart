@@ -9,7 +9,6 @@ import '../../../../core/theming/colors.dart';
 import '../../../../core/theming/styles.dart';
 import '../../data/model/client_order_response_model.dart';
 
-
 class OrderItemClientOrder extends StatelessWidget {
   final Order order;
   const OrderItemClientOrder({super.key, required this.order});
@@ -33,7 +32,7 @@ class OrderItemClientOrder extends StatelessWidget {
                 IconButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    openMap(30.565178, 31.012927);
+                    openMap('30.565178', '31.012927');
                   },
                   icon: SvgPicture.asset(AppAssets.locationSelectedSvg),
                 ),

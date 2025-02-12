@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:karam_driver/features/driver_main/ui/widgets/custom_floating_action_button.dart';
+import 'package:karam_driver/features/driver_main/ui/widgets/search_customer_bottom_sheet.dart';
 import '../../../core/helpers/app_assets.dart';
 import '../../../core/theming/colors.dart';
 import '../../client_orders/ui/my_order_screen.dart';
 import '../../my_account/ui/my_account_screen.dart';
 import 'widgets/nav_bar_item.dart';
-
 
 class DriverMain extends StatefulWidget {
   const DriverMain({super.key});
@@ -31,12 +32,29 @@ class _DriverMainState extends State<DriverMain> {
         bucket: bucket,
         child: currentScreen,
       ),
+      floatingActionButton: IconButton(
+        onPressed: () {
+          Get.bottomSheet(const SearchCustomerBottomSheet(), isScrollControlled: true);
+        },
+        icon: const CustomFloatingActionButton(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(40),
               topRight: Radius.circular(40),
             ),
+            boxShadow: [
+              BoxShadow(
+                // ignore: deprecated_member_use
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 0,
+                blurRadius: 40,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: BottomAppBar(
             color: Colors.transparent,

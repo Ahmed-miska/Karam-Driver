@@ -14,8 +14,10 @@ class ApiConstants {
   static const String getOrders = '/api/drivers_orders/my_orders';
   static const String getOrderDetails = '/api/drivers_orders/order_details';
   static const String cancelOrder = '/api/clients_orders/change_order_status';
-
   static const String orederStatus = '/api/drivers_orders/order_status';
+  static const String searchClient = '/api/drivers_orders/search_client';
+  static const String uploadDoorPhoto = '/api/drivers_orders/upload_door_photo';
+  static const String changeOrderStatus = '/api/drivers_orders/change_order_status';
 }
 
 class ApiErrors {

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:karam_driver/features/camera/ui/camera_screen.dart';
 import 'package:karam_driver/features/client_orders/logic/client_orders_binding.dart';
 import 'package:karam_driver/features/confirm_password/logic/confirm_password_binding.dart';
 import 'package:karam_driver/features/confirm_password/ui/confirm_password_screen.dart';
 import 'package:karam_driver/features/contact_us/logic/contact_us_binding.dart';
 import 'package:karam_driver/features/contact_us/ui/contact_us_screen.dart';
+import 'package:karam_driver/features/driver_main/logic/driver_main_binding.dart';
 import 'package:karam_driver/features/driver_main/ui/driver_main.dart';
 import 'package:karam_driver/features/forget_password/logic/forget_password_binding.dart';
 import 'package:karam_driver/features/forget_password/ui/forget_password_screen.dart';
@@ -20,7 +22,6 @@ import 'package:karam_driver/features/sign_in/ui/sign_in_screen.dart';
 import 'package:karam_driver/features/sign_up/logic/sign_up_binding.dart';
 import 'package:karam_driver/features/sign_up/ui/sign_up_screen.dart';
 
-
 class AppRoutes {
   static const signInPage = '/login';
   static const signUpPageURL = '/register';
@@ -32,6 +33,7 @@ class AppRoutes {
   static const profile = '/profile';
   static const contactUs = '/conatctUs';
   static const clientOrderDetailsScreen = '/clientOrderDetailsScreen';
+  static const cameraScreen = '/cameraScreen';
 }
 
 class AppPages {
@@ -83,14 +85,16 @@ class AppPages {
       binding: ForgetPasswordBinding(),
     ),
     GetPage(
-        name: AppRoutes.driverMain,
-        transition: Transition.fadeIn,
-        curve: Curves.easeInOut,
-        transitionDuration: const Duration(milliseconds: 500),
-        page: () => const DriverMain(),
-        bindings: [
-          ClientOrdersBinding(),
-        ]),
+      name: AppRoutes.driverMain,
+      transition: Transition.fadeIn,
+      curve: Curves.easeInOut,
+      transitionDuration: const Duration(milliseconds: 500),
+      page: () => const DriverMain(),
+      bindings: [
+        ClientOrdersBinding(),
+        DriverMainBinding(),
+      ],
+    ),
     GetPage(
       name: AppRoutes.pageScreen,
       transition: Transition.zoom,
@@ -124,6 +128,14 @@ class AppPages {
       bindings: [
         ClientOrdersBinding(),
       ],
+    ),
+    GetPage(
+      name: AppRoutes.cameraScreen,
+      transition: Transition.rightToLeftWithFade,
+      curve: Curves.easeInOut,
+      transitionDuration: const Duration(milliseconds: 500),
+      page: () => const CameraScreen(),
+      
     ),
   ];
 }

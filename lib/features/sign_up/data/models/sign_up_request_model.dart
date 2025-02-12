@@ -3,15 +3,17 @@ class SignUpRequestModel {
   final String mobile;
   final String password;
   final String address;
+  final String nearstPoint;
   final String? location;
   final String areaID;
-  final String userType = 'driver';
+  final String userType = '3';
 
   SignUpRequestModel({
     required this.fullName,
     required this.mobile,
     required this.password,
     required this.address,
+    required this.nearstPoint,
     this.location,
     required this.areaID,
   });
@@ -24,5 +26,6 @@ class SignUpRequestModel {
         "location": location,
         "area_id": areaID,
         "user_type": userType,
+        "nearest_reference_point":nearstPoint
       };
 }

@@ -64,7 +64,7 @@ Future<Position> getCurrentPosition() async {
 // Function to detect if the app is running in standalone mode (PWA)
 // Detect if the app is running in PWA standalone mode
 
-void openMap(double destinationLat, double destinationLong) async {
+void openMap(String destinationLat, String destinationLong) async {
   Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
 
   try {

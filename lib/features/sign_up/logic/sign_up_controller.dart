@@ -24,6 +24,7 @@ class SignUpController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController locationController = TextEditingController();
+  TextEditingController nearstRefrancePointController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController areaController = TextEditingController();
   final FocusNode nameFocusNode = FocusNode();
@@ -32,6 +33,7 @@ class SignUpController extends GetxController {
   final FocusNode locationFocusNode = FocusNode();
   final FocusNode cityFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
+    final FocusNode nearstPointFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
   final FocusNode areaFocusNode = FocusNode();
   String areaID = '1'.obs.toString();
@@ -85,6 +87,7 @@ class SignUpController extends GetxController {
         address: addressController.text,
         location: locationController.text,
         areaID: areaID,
+        nearstPoint: nearstRefrancePointController.text,
       ),
     );
     Get.back();

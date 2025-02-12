@@ -12,8 +12,6 @@ import '../../../../core/widgets/map_screen.dart';
 import '../../logic/sign_up_controller.dart';
 import 'select_area.dart';
 
-
-
 class SignUpFields extends StatefulWidget {
   const SignUpFields({super.key});
 
@@ -121,6 +119,29 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'هذا الحقل مطلوب';
+                  }
+                  return null;
+                },
+                onEditingComplete: () {
+                  FocusScope.of(context).requestFocus(controller.nearstPointFocusNode);
+                },
+              ),
+              verticalSpace(15),
+              AppTextFormField(
+                focusNode: controller.nearstPointFocusNode,
+                controller: controller.nearstRefrancePointController,
+                hintText: 'اقرب نقطه داله',
+                keyboardType: TextInputType.name,
+                suffixIcon: Padding(
+                  padding: EdgeInsets.only(left: 12.w, top: 10.h, bottom: 10.h, right: 12.w),
+                  child: SvgPicture.asset(AppAssets.locationSvg),
+                ),
+                validator: (value) {
+                  // ignore: unnecessary_null_comparison
+                  if (value == null || value.isEmpty) {
+                    return 'هذا الحقل مطلوب';
+                  } else if (value.length < 5) {
+                    return 'العنوان غير صالح';
                   }
                   return null;
                 },
