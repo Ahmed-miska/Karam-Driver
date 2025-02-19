@@ -35,7 +35,7 @@ class SignInScreen extends StatelessWidget {
                 verticalSpace(30),
                 SvgPicture.asset(AppAssets.logoSvg),
                 verticalSpace(40),
-                Text('مرحبا بك في تطبيق كرم ', style: AppStyles.font16Black500),
+                Text('مرحبا بك في تطبيق دليني ', style: AppStyles.font16Black500),
                 verticalSpace(16),
                 Text('يرجى ادخال رقم الجوال لتسجيل الدخول', style: AppStyles.font14gray400),
                 verticalSpace(40),

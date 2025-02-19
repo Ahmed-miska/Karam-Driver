@@ -227,7 +227,7 @@ Future<void> checkForUpdates() async {
   print('Checking for updates.....................................');
   try {
     // رابط ملف version.json على السيرفر (تأكد من أن الرابط صحيح)
-    final response = await http.get(Uri.parse('https://karamiq.com/version.json'));
+    final response = await http.get(Uri.parse('https://3talabplus.com/version.json'));
 
     if (response.statusCode == 200) {
       final serverVersion = json.decode(response.body)['version'];

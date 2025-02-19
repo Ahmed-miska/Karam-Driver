@@ -1,5 +1,5 @@
 class ApiConstants {
-  static const String apiBaseUrl = "https://karamiq.com/app";
+  static const String apiBaseUrl = "https://3talabplus.com/app";
   static const String signIn = '/api/users/login';
   static const String signUp = '/api/users/register';
   static const String addAddress = '/api/users/add_address';

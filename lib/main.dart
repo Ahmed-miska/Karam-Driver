@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
           getPages: AppPages.pages,
           enableLog: true,
           debugShowCheckedModeBanner: false,
-          title: 'Karam',
+          title: 'Dalleni',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
             useMaterial3: true,

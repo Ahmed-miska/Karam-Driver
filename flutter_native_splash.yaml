@@ -1,0 +1,14 @@
+flutter_native_splash:
+
+  color: "#f2f2f2"
+  image: assets/images/splashh.png
+  branding: assets/images/br.png
+  web: true
+  ios: true
+ 
+  android_12:
+    image: assets/images/splashh.png
+    color: "#f2f2f2"
+    branding: assets/images/br.png
+    web: true
+    ios: true
