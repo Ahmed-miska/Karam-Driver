@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:karam_driver/core/helpers/binging_helper.dart';
 import 'package:karam_driver/core/helpers/spacing.dart';
 import 'package:karam_driver/core/widgets/app_text_button.dart';
 import 'package:karam_driver/features/driver_main/logic/driver_main_binding.dart';
@@ -29,7 +30,7 @@ class _CameraScreenState extends State<CameraScreen> {
   Future<void> _setupCameraController() async {
     List<CameraDescription> _cameras = await availableCameras();
     if (_cameras.isNotEmpty) {
-      cameraController = CameraController(_cameras.first, ResolutionPreset.high);
+      cameraController = CameraController(_cameras.first, ResolutionPreset.high, enableAudio: false);
       await cameraController!.initialize();
       setState(() {
         cameras = _cameras;
@@ -59,6 +60,12 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   @override
+  void dispose() {
+    cameraController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -71,7 +78,18 @@ class _CameraScreenState extends State<CameraScreen> {
                   capturedImage == null
                       ? (cameraController == null || !cameraController!.value.isInitialized ? const Center(child: CircularProgressIndicator()) : CameraPreview(cameraController!))
                       : Image.memory(capturedImage!, fit: BoxFit.cover),
-                  const Positioned(top: 10, left: 10, child: BackButton()),
+                  Positioned(
+                      top: 10,
+                      left: 10,
+                      child: BackButton(
+                        onPressed: () {
+                          if (Get.previousRoute.isEmpty) {
+                            Get.offAllNamed(AppRoutes.driverMain);
+                          } else {
+                            Get.back();
+                          }
+                        },
+                      )),
                 ],
               ),
             ),
