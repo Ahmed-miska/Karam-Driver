@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:karam_driver/core/widgets/custom_snack_bar.dart';
@@ -18,6 +17,7 @@ class DriverMainController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isError = false.obs;
   RxString error = ''.obs;
+  Uint8List? selectedImage;
 
   Future<void> searchClient() async {
     Get.dialog(const Center(child: CircularProgressIndicator()));
@@ -32,7 +32,11 @@ class DriverMainController extends GetxController {
         isLoading.value = false;
         isError.value = false;
         error.value = '';
-
+        update();
+      } else if (response.response!.data['response_code'] == 400) {
+        isLoading.value = false;
+        isError.value = true;
+        error.value = 400.toString();
         update();
       } else {
         isLoading.value = false;
@@ -52,25 +56,24 @@ class DriverMainController extends GetxController {
   Future<void> changeOrderStatus(ChangeOrderStatusRequestModel model) async {
     Get.dialog(const Center(child: CircularProgressIndicator()));
     final response = await driverMainRepo.cangeOrderStatus(model);
+    Get.back();
+
     if (response.response != null && response.response!.statusCode == 200) {
       if (response.response!.data['response_code'] == 200) {
         Get.back();
         customSnackbar('تم تغيير حالة الطلب بنجاح', response.response!.data['response_message']);
       } else {
         Get.back();
-
         customSnackbar('خطا', response.response!.data['response_message']);
       }
     } else {
       Get.back();
-
       customSnackbar('', response.error.toString());
     }
   }
 
   Future<void> uploadDoorPhoto(Uint8List capturedImage) async {
     Get.dialog(const Center(child: CircularProgressIndicator()));
-
     final response = await driverMainRepo.uploadDoorPhoto(capturedImage);
     if (response.response != null && response.response!.statusCode == 200) {
       Get.back();
@@ -82,6 +85,21 @@ class DriverMainController extends GetxController {
       }
     } else {
       customSnackbar('', response.error.toString());
+    }
+  }
+
+  Future<void> sendMapLink() async {
+    Get.dialog(const Center(child: CircularProgressIndicator()));
+    final response = await driverMainRepo.sendMapLink(searchController.text);
+    if (response.response != null && response.response!.statusCode == 200) {
+      Get.back();
+      if (response.response!.data['response_code'] == 200) {
+        customSnackbar('تم ارسال الرابط بنجاح', response.response!.data['response_message']);
+      } else {
+        customSnackbar('خطا', response.response!.data['response_message']);
+      }
+    } else {
+      customSnackbar('خطا', response.error.toString());
     }
   }
 }

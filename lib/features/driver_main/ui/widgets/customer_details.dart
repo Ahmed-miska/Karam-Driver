@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:karam_driver/core/helpers/binging_helper.dart';
 import 'package:karam_driver/core/helpers/functions.dart';
@@ -21,6 +22,27 @@ class CustomerDetails extends StatelessWidget {
         return const SizedBox();
       }
       if (controller.isError.value) {
+        if (controller.error.value == '400') {
+          return SizedBox(
+            child: Column(
+              children: [
+                Text(
+                  'عفوا هذا العميل غير متواجد يمكنك ارسال طلب الموقع الحالي ',
+                  textAlign: TextAlign.right,
+                  style: AppStyles.font14Black400,
+                ),
+                verticalSpace(20),
+                AppTextButton(
+                  text: 'ارسال',
+                  onTap: () {
+                    controller.sendMapLink();
+                  },
+                ),
+                verticalSpace(20),
+              ],
+            ),
+          );
+        }
         return Center(child: Text(controller.error.value));
       }
       if (controller.clientSearchResponseData == null && controller.isLoading.value == false && controller.isError.value == false) {
@@ -99,6 +121,19 @@ class CustomerDetails extends StatelessWidget {
                       Get.dialog(AlertDialog(
                         title: const Text('صوره باب المنزل', textAlign: TextAlign.right),
                         content: CachedImage(image: controller.clientSearchResponseData!.doorPhoto!),
+                        actions: [
+                          TextButton(
+                            child: const Text('اغلاق'),
+                            onPressed: () {
+                              Get.back();
+                            },
+                          ),
+                        ],
+                      ));
+                    } else if (controller.selectedImage != null) {
+                      Get.dialog(AlertDialog(
+                        title: const Text('صوره باب المنزل', textAlign: TextAlign.right),
+                        content: SizedBox(height: 500.h, child: Image.memory(controller.selectedImage!, fit: BoxFit.cover)),
                         actions: [
                           TextButton(
                             child: const Text('اغلاق'),

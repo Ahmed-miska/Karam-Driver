@@ -41,6 +41,7 @@ class _CameraScreenState extends State<CameraScreen> {
   void _takePicture() async {
     if (cameraController != null && cameraController!.value.isInitialized) {
       final XFile image = await cameraController!.takePicture();
+
       Uint8List imageBytes = await image.readAsBytes();
       setState(() {
         capturedImage = imageBytes;
@@ -109,14 +110,17 @@ class _CameraScreenState extends State<CameraScreen> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
-                              child: AppTextButton(
-                                  text: 'حفظ وعوده',
-                                  onTap: () async {
-                                    if (!Get.isRegistered<DriverMainController>()) {
-                                      DriverMainBinding().dependencies();
-                                    }
-                                    Get.find<DriverMainController>().uploadDoorPhoto(capturedImage!);
-                                  })),
+                            child: AppTextButton(
+                              text: 'حفظ وعوده',
+                              onTap: () async {
+                                if (!Get.isRegistered<DriverMainController>()) {
+                                  DriverMainBinding().dependencies();
+                                }
+                                Get.find<DriverMainController>().selectedImage = capturedImage!;
+                                Get.find<DriverMainController>().uploadDoorPhoto(capturedImage!);
+                              },
+                            ),
+                          ),
                           horizontalSpace(10),
                           Expanded(child: AppTextButton(text: 'اعاده التقاط', onTap: _retakePicture)),
                         ],

@@ -18,6 +18,7 @@ class ApiConstants {
   static const String searchClient = '/api/drivers_orders/search_client';
   static const String uploadDoorPhoto = '/api/drivers_orders/upload_door_photo';
   static const String changeOrderStatus = '/api/drivers_orders/change_order_status';
+  static const String sendMapLink = '/api/drivers_orders/send_map_link';
 }
 
 class ApiErrors {

@@ -44,6 +44,22 @@ class DriverMainRepo {
 
   }
 
+  Future <ApiResponse> sendMapLink(String mobile) async {
+     dio.options.headers = {'Authorization': 'Bearer ${SaveUserData().getUserToken()}'};
+    dio.interceptors.add(PrettyDioLogger(requestBody: true, responseBody: true));
+    try {
+      Response response = await dio.get(
+        ApiConstants.apiBaseUrl + ApiConstants.sendMapLink,
+        queryParameters: {
+          'client_mobile': mobile,
+        },
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.handle(e));
+    }
+  }
+
   Future<ApiResponse> uploadDoorPhoto(Uint8List capturedImage) async {
     // التأكد من عدم إرسال بيانات فارغة
     if (capturedImage.isEmpty) {

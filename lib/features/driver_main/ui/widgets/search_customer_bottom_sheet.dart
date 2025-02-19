@@ -81,7 +81,7 @@ class _SearchCustomerBottomSheetState extends State<SearchCustomerBottomSheet> {
                     }
                   }),
               verticalSpace(30),
-               const CustomerDetails(),
+              const CustomerDetails(),
             ],
           );
         },
