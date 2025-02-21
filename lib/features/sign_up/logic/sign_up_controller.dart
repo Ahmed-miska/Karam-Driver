@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:karam_driver/core/helpers/binging_helper.dart';
 import 'package:karam_driver/core/networking/api_response.dart';
-
-import '../../../core/helpers/binging_helper.dart';
 import '../../../core/helpers/functions.dart';
 import '../../../core/networking/api_error_handler.dart';
 import '../../../core/widgets/custom_snack_bar.dart';
@@ -11,7 +10,6 @@ import '../data/models/areas_list_model.dart';
 import '../data/models/sign_up_request_model.dart';
 import '../data/models/sign_up_response_model.dart';
 import '../data/repo/sign_up_repo.dart';
-
 
 class SignUpController extends GetxController {
   final SignUpRepo signUpRepo;
@@ -33,7 +31,7 @@ class SignUpController extends GetxController {
   final FocusNode locationFocusNode = FocusNode();
   final FocusNode cityFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
-    final FocusNode nearstPointFocusNode = FocusNode();
+  final FocusNode nearstPointFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
   final FocusNode areaFocusNode = FocusNode();
   String areaID = '1'.obs.toString();
@@ -63,7 +61,6 @@ class SignUpController extends GetxController {
           areasListResponseModel = AreasListResponseModel.fromJson(response.response!.data);
           areasList.addAll(areasListResponseModel!.responseData!);
           update(); // Replace the list
-          print('Data updated');
           update();
         } else {
           error = 'لا يوجد منطقة مطابقة';
@@ -91,15 +88,12 @@ class SignUpController extends GetxController {
       ),
     );
     Get.back();
-
     if (response.response != null && response.response!.statusCode == 200) {
       if (response.response!.data['response_code'] == 200) {
         signUpResponseModel = SignUpResponseModel.fromJson(response.response!.data);
         if (signUpResponseModel != null && signUpResponseModel!.responseCode == 200) {
           customSnackbar('تم', signUpResponseModel!.responseMessage);
-
-          print(signUpResponseModel!.responseData!.fullName);
-          Get.toNamed(AppRoutes.otpPageURL, arguments: [phoneController.text, 'signUp']);
+          Get.offAllNamed(AppRoutes.signInPage);
         } else {
           customSnackbar('خطأ', signUpResponseModel!.responseMessage);
         }
