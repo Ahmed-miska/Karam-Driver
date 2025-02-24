@@ -248,7 +248,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   }
                 },
                 controller: controller.locationController,
-                hintText: 'اختياري',
+                hintText: 'الموقع',
                 suffixIcon: Padding(
                   padding: EdgeInsets.only(left: 10.w, top: 8.h, bottom: 8.h, right: 10.w),
                   child: SvgPicture.asset(AppAssets.earthSvg),
@@ -258,7 +258,10 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   child: SvgPicture.asset(AppAssets.locationSvg),
                 ),
                 validator: (value) {
-                  return null;
+                  // ignore: unnecessary_null_comparison
+                  if (value == null || value.isEmpty) {
+                    return 'هذا الحقل مطلوب';
+                  }
                 },
               ),
               verticalSpace(20),

@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../../core/helpers/app_assets.dart';
 import '../../../../../core/theming/colors.dart';
 
-
 class SelectImageContianer extends StatefulWidget {
   const SelectImageContianer({
     super.key,
@@ -52,7 +51,7 @@ class _SelectImageContianerState extends State<SelectImageContianer> {
             ),
             child: InkWell(
                 onTap: () {
-                  _pickImage();
+                  //  _pickImage();
                 },
                 child: const Icon(Icons.edit_outlined, color: AppColors.white)),
           )

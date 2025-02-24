@@ -52,6 +52,7 @@ class DriverMainRepo {
         ApiConstants.apiBaseUrl + ApiConstants.sendMapLink,
         queryParameters: {
           'client_mobile': mobile,
+          'user_id': SaveUserData().getUserId(),
         },
       );
       return ApiResponse.withSuccess(response);
