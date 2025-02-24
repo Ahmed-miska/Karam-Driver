@@ -258,10 +258,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   child: SvgPicture.asset(AppAssets.locationSvg),
                 ),
                 validator: (value) {
-                  // ignore: unnecessary_null_comparison
-                  if (value == null || value.isEmpty) {
-                    return 'هذا الحقل مطلوب';
-                  }
+                  
                 },
               ),
               verticalSpace(20),
