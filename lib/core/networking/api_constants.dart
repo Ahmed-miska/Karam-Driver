@@ -1,7 +1,7 @@
 class ApiConstants {
   static const String apiBaseUrl = "https://3talabplus.com/app";
-  static const String signIn = '/api/users/login';
-  static const String signUp = '/api/users/register';
+  static const String signIn = '/api/drivers/login';
+  static const String signUp = '/api/drivers/register';
   static const String addAddress = '/api/users/add_address';
   static const String areasList = '/api/users/areas_list';
   static const String activeUser = '/api/users/activate_user';
