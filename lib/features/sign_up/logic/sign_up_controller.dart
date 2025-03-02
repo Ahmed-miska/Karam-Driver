@@ -23,7 +23,7 @@ class SignUpController extends GetxController {
 
   FocusNode nameFocus = FocusNode();
   FocusNode phoneFocus = FocusNode();
-  FocusNode governorateFocus = FocusNode();
+  FocusNode addressFocus = FocusNode();
   FocusNode workplaceFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
   FocusNode confirmPasswordFocus = FocusNode();

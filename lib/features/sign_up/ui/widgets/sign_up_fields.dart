@@ -70,12 +70,12 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   return 'رقم الجوال غير صالح';
                 },
                 onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(controller.governorateFocus);
+                  FocusScope.of(context).requestFocus(controller.addressFocus);
                 },
               ),
               verticalSpace(15),
               AppTextFormField(
-                focusNode: controller.governorateFocus,
+                focusNode: controller.addressFocus,
                 controller: controller.addressController,
                 readOnly: true,
                 onTap: () async {},
