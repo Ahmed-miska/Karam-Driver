@@ -10,8 +10,6 @@ import '../../../core/helpers/spacing.dart';
 import '../../../core/theming/styles.dart';
 import 'widgets/sign_up_button.dart';
 
-
-
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
   @override
@@ -25,7 +23,7 @@ class SignUpScreen extends StatelessWidget {
             verticalSpace(20),
             Expanded(
               child: SingleChildScrollView(
-                reverse: true,
+                reverse: false,
                 child: Column(
                   children: [
                     SvgPicture.asset(AppAssets.logoSvg),

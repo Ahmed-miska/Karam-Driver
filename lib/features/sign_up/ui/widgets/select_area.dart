@@ -8,7 +8,6 @@ import '../../../../core/widgets/app_text_form_field.dart';
 import '../../data/models/areas_list_model.dart';
 import '../../logic/sign_up_controller.dart';
 
-
 class SelectArea extends StatefulWidget {
   const SelectArea({super.key});
 
@@ -121,7 +120,7 @@ class _SelectAreaState extends State<SelectArea> {
                                   child: InkWell(
                                     onTap: () {
                                       controller.areaID = areasList[index].id.toString();
-                                      controller.areaController.text = areasList[index].areaName!;
+                                    //  controller.governorateController.text = areasList[index].areaName!;
                                       Get.back();
                                     },
                                     child: Text(

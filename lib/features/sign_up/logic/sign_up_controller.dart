@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:karam_driver/core/helpers/binging_helper.dart';
 import 'package:karam_driver/core/networking/api_response.dart';
-import '../../../core/helpers/functions.dart';
 import '../../../core/networking/api_error_handler.dart';
 import '../../../core/widgets/custom_snack_bar.dart';
 import '../data/models/areas_list_model.dart';
@@ -19,21 +17,17 @@ class SignUpController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+  TextEditingController workplaceController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController nearstRefrancePointController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController areaController = TextEditingController();
-  final FocusNode nameFocusNode = FocusNode();
-  final FocusNode phoneFocusNode = FocusNode();
-  final FocusNode addressFocusNode = FocusNode();
-  final FocusNode locationFocusNode = FocusNode();
-  final FocusNode cityFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
-  final FocusNode nearstPointFocusNode = FocusNode();
-  final FocusNode confirmPasswordFocusNode = FocusNode();
-  final FocusNode areaFocusNode = FocusNode();
+
+  FocusNode nameFocus = FocusNode();
+  FocusNode phoneFocus = FocusNode();
+  FocusNode governorateFocus = FocusNode();
+  FocusNode workplaceFocus = FocusNode();
+  FocusNode passwordFocus = FocusNode();
+  FocusNode confirmPasswordFocus = FocusNode();
+
   String areaID = '1'.obs.toString();
 
   final formKey = GlobalKey<FormState>();
@@ -47,7 +41,7 @@ class SignUpController extends GetxController {
   var error = '';
   @override
   void onInit() async {
-    addressController.text = 'بابل - الحله';
+    addressController.text = 'الحلة';
     super.onInit();
   }
 
@@ -80,11 +74,10 @@ class SignUpController extends GetxController {
       SignUpRequestModel(
         fullName: nameController.text,
         mobile: phoneController.text,
-        password: passwordController.text,
+        password: passwordController.text,      
+        deleveryCompany: workplaceController.text,
         address: addressController.text,
-        location: locationController.text,
-        areaID: areaID,
-        nearstPoint: nearstRefrancePointController.text,
+       
       ),
     );
     Get.back();
@@ -106,30 +99,30 @@ class SignUpController extends GetxController {
     }
   }
 
-  Future<void> fetchAndSetLocation() async {
-    try {
-      isLoading.value = true;
-      Position position = await getCurrentPosition();
-      lat = position.latitude.toString();
-      long = position.longitude.toString();
-      locationController.text = '$lat,$long';
-    } catch (e) {
-      customSnackbar('خطأ', e.toString()); // Show error message to the user
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Future<void> fetchAndSetLocation() async {
+  //   try {
+  //     isLoading.value = true;
+  //     Position position = await getCurrentPosition();
+  //     lat = position.latitude.toString();
+  //     long = position.longitude.toString();
+  //     locationController.text = '$lat,$long';
+  //   } catch (e) {
+  //     customSnackbar('خطأ', e.toString()); // Show error message to the user
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
-  void liveLocation() {
-    LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
+  // void liveLocation() {
+  //   LocationSettings locationSettings = const LocationSettings(
+  //     accuracy: LocationAccuracy.high,
+  //     distanceFilter: 100,
+  //   );
 
-    Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position position) {
-      lat = position.latitude.toString();
-      long = position.longitude.toString();
-      locationController.text = 'lat: $lat,long: $long';
-    });
-  }
+  //   Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position position) {
+  //     lat = position.latitude.toString();
+  //     long = position.longitude.toString();
+  //     locationController.text = 'lat: $lat,long: $long';
+  //   });
+  // }
 }

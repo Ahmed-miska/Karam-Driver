@@ -2,15 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/app_regex.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/app_text_form_field.dart';
-import '../../../../core/widgets/map_screen.dart';
 import '../../logic/sign_up_controller.dart';
-import 'select_area.dart';
 
 class SignUpFields extends StatefulWidget {
   const SignUpFields({super.key});
@@ -22,9 +18,7 @@ class SignUpFields extends StatefulWidget {
 class _SignUpFieldsState extends State<SignUpFields> {
   bool obscureText = true;
   bool obscureText2 = true;
-  String lat = '';
-  String long = '';
-  LatLng? _savedLocation;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SignUpController>(
@@ -34,7 +28,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           child: Column(
             children: [
               AppTextFormField(
-                focusNode: controller.nameFocusNode,
+                focusNode: controller.nameFocus,
                 hintText: 'الاسم كاملا',
                 controller: controller.nameController,
                 keyboardType: TextInputType.name,
@@ -52,12 +46,12 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   return null;
                 },
                 onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(controller.phoneFocusNode);
+                  FocusScope.of(context).requestFocus(controller.phoneFocus);
                 },
               ),
               verticalSpace(15),
               AppTextFormField(
-                focusNode: controller.phoneFocusNode,
+                focusNode: controller.phoneFocus,
                 textDirection: TextDirection.ltr,
                 controller: controller.phoneController,
                 keyboardType: TextInputType.phone,
@@ -76,15 +70,16 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   return 'رقم الجوال غير صالح';
                 },
                 onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(controller.addressFocusNode);
+                  FocusScope.of(context).requestFocus(controller.governorateFocus);
                 },
               ),
               verticalSpace(15),
               AppTextFormField(
-                readOnly: true,
-                focusNode: controller.addressFocusNode,
+                focusNode: controller.governorateFocus,
                 controller: controller.addressController,
-                hintText: 'بابل - الحله',
+                readOnly: true,
+                onTap: () async {},
+                hintText: 'المحافظه',
                 keyboardType: TextInputType.name,
                 suffixIcon: Padding(
                   padding: EdgeInsets.only(left: 12.w, top: 10.h, bottom: 10.h, right: 12.w),
@@ -100,37 +95,14 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   return null;
                 },
                 onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(controller.areaFocusNode);
+                  FocusScope.of(context).requestFocus(controller.workplaceFocus);
                 },
               ),
               verticalSpace(15),
               AppTextFormField(
-                focusNode: controller.areaFocusNode,
-                hintText: 'المنطقة',
-                readOnly: true,
-                controller: controller.areaController,
-                onTap: () async {
-                  await controller.getAreasList(1, '');
-                  Get.bottomSheet(
-                    const SelectArea(),
-                    isScrollControlled: true,
-                  );
-                },
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'هذا الحقل مطلوب';
-                  }
-                  return null;
-                },
-                onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(controller.nearstPointFocusNode);
-                },
-              ),
-              verticalSpace(15),
-              AppTextFormField(
-                focusNode: controller.nearstPointFocusNode,
-                controller: controller.nearstRefrancePointController,
-                hintText: 'اقرب نقطه داله',
+                focusNode: controller.workplaceFocus,
+                controller: controller.workplaceController,
+                hintText: 'اسم شركه التوصيل',
                 keyboardType: TextInputType.name,
                 suffixIcon: Padding(
                   padding: EdgeInsets.only(left: 12.w, top: 10.h, bottom: 10.h, right: 12.w),
@@ -146,12 +118,12 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   return null;
                 },
                 onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(controller.passwordFocusNode);
+                  FocusScope.of(context).requestFocus(controller.passwordFocus);
                 },
               ),
               verticalSpace(15),
               AppTextFormField(
-                focusNode: controller.passwordFocusNode,
+                focusNode: controller.passwordFocus,
                 textDirection: TextDirection.ltr,
                 controller: controller.passwordController,
                 hintText: 'كلمة المرور',
@@ -186,12 +158,12 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   return null;
                 },
                 onEditingComplete: () {
-                  FocusScope.of(context).requestFocus(controller.confirmPasswordFocusNode);
+                  FocusScope.of(context).requestFocus(controller.confirmPasswordFocus);
                 },
               ),
               verticalSpace(15),
               AppTextFormField(
-                focusNode: controller.confirmPasswordFocusNode,
+                focusNode: controller.confirmPasswordFocus,
                 textDirection: TextDirection.ltr,
                 controller: controller.confirmPasswordController,
                 hintText: 'تأكيد كلمة المرور',
@@ -226,42 +198,10 @@ class _SignUpFieldsState extends State<SignUpFields> {
                   return null;
                 },
                 onEditingComplete: () {
-                  controller.confirmPasswordFocusNode.unfocus();
+                  controller.confirmPasswordFocus.unfocus();
                 },
               ),
               verticalSpace(15),
-              AppTextFormField(
-                readOnly: true,
-                onTap: () async {
-                  // Navigate to the MapPage and wait for a result.
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MapScreen()),
-                  );
-                  if (result != null && result is LatLng) {
-                    setState(() {
-                      _savedLocation = result;
-                      controller.locationController.text = '${_savedLocation!.latitude}, ${_savedLocation!.longitude}';
-                    });
-
-                    debugPrint('Saved Location: ${_savedLocation!.latitude}, ${_savedLocation!.longitude}');
-                  }
-                },
-                controller: controller.locationController,
-                hintText: 'الموقع',
-                suffixIcon: Padding(
-                  padding: EdgeInsets.only(left: 10.w, top: 8.h, bottom: 8.h, right: 10.w),
-                  child: SvgPicture.asset(AppAssets.earthSvg),
-                ),
-                prefixIcon: Padding(
-                  padding: EdgeInsets.only(left: 15.w, top: 13.h, bottom: 13.h, right: 10.w),
-                  child: SvgPicture.asset(AppAssets.locationSvg),
-                ),
-                validator: (value) {
-                  
-                },
-              ),
-              verticalSpace(20),
             ],
           ),
         );

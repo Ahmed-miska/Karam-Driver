@@ -1,10 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
-
 import '../../../../../core/helpers/app_assets.dart';
 import '../../../../../core/theming/colors.dart';
 
@@ -60,11 +57,11 @@ class _SelectImageContianerState extends State<SelectImageContianer> {
     );
   }
 
-  Future _pickImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image == null) return;
-    setState(() {
-      selectedImage = File(image.path);
-    });
-  }
+  // Future _pickImage() async {
+  //   final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   if (image == null) return;
+  //   setState(() {
+  //     selectedImage = File(image.path);
+  //   });
+  // }
 }
