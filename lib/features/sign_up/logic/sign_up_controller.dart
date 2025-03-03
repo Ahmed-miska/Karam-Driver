@@ -41,7 +41,7 @@ class SignUpController extends GetxController {
   var error = '';
   @override
   void onInit() async {
-    addressController.text = 'الحلة';
+    addressController.text = 'بابل - الحلة';
     super.onInit();
   }
 

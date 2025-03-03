@@ -78,7 +78,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 focusNode: controller.addressFocus,
                 controller: controller.addressController,
                 readOnly: true,
-                onTap: () async {},
+               
                 hintText: 'المحافظه',
                 keyboardType: TextInputType.name,
                 suffixIcon: Padding(
