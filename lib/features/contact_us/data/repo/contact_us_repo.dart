@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:karam_driver/core/helpers/functions.dart';
 import 'package:karam_driver/core/helpers/save_user_data.dart';
 import 'package:karam_driver/core/networking/api_constants.dart';
 import 'package:karam_driver/core/networking/api_error_handler.dart';
@@ -23,6 +24,11 @@ class ContactUsRepo {
       );
 
       return ApiResponse.withSuccess(response);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 401) {
+        logOut();
+      }
+      return ApiResponse.withError(ApiErrorHandler.handle(e));
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.handle(e));
     }

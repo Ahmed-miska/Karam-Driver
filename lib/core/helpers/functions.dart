@@ -3,7 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:karam_driver/core/helpers/binging_helper.dart';
+import 'package:karam_driver/core/helpers/save_user_data.dart';
 import 'package:karam_driver/core/theming/styles.dart';
+import 'package:karam_driver/core/widgets/app_text_button.dart';
 import 'package:karam_driver/core/widgets/custom_snack_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share_plus/share_plus.dart';
@@ -284,5 +287,25 @@ void showUpdateDialog() {
       ],
     ),
     barrierDismissible: false, // منع إغلاق النافذة بالضغط خارجها
+  );
+}
+
+void logOut() async {
+  Get.dialog(
+    AlertDialog(
+      title: Text('انتهت صلاحيه الدخول', style: AppStyles.font16Main600, textAlign: TextAlign.right),
+      content: Text('يجب عليك تسجيل دخول مرة اخرى', style: AppStyles.font12Black400, textAlign: TextAlign.right),
+      actions: [
+        AppTextButton(
+          text: 'تسجيل الدخول',
+          onTap: () async {
+            await SaveUserData().clearSharedData();
+
+            Get.back();
+            Get.offAllNamed(AppRoutes.signInPage);
+          },
+        )
+      ],
+    ),
   );
 }

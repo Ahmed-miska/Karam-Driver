@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:karam_driver/core/helpers/functions.dart';
 import 'package:karam_driver/core/helpers/save_user_data.dart';
 import 'package:karam_driver/core/networking/api_constants.dart';
 import 'package:karam_driver/features/driver_main/data/models/change_order_status_request_model.dart';
@@ -23,6 +24,11 @@ class DriverMainRepo {
         },
       );
       return ApiResponse.withSuccess(response);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 401) {
+        logOut();
+      }
+      return ApiResponse.withError(ApiErrorHandler.handle(e));
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.handle(e));
     }
@@ -38,6 +44,11 @@ class DriverMainRepo {
 
       );
       return ApiResponse.withSuccess(response);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 401) {
+        logOut();
+      }
+      return ApiResponse.withError(ApiErrorHandler.handle(e));
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.handle(e));
     }
@@ -56,6 +67,11 @@ class DriverMainRepo {
         },
       );
       return ApiResponse.withSuccess(response);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 401) {
+        logOut();
+      }
+      return ApiResponse.withError(ApiErrorHandler.handle(e));
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.handle(e));
     }
@@ -88,6 +104,11 @@ class DriverMainRepo {
         data: formData,
       );
       return ApiResponse.withSuccess(response);
+    } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 401) {
+        logOut();
+      }
+      return ApiResponse.withError(ApiErrorHandler.handle(e));
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.handle(e));
     }
