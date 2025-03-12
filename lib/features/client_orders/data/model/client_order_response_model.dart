@@ -1,13 +1,3 @@
-// To parse this JSON data, do
-//
-//     final clientOrderResponseModel = clientOrderResponseModelFromJson(jsonString);
-
-import 'dart:convert';
-
-ClientOrderResponseModel clientOrderResponseModelFromJson(String str) => ClientOrderResponseModel.fromJson(json.decode(str));
-
-String clientOrderResponseModelToJson(ClientOrderResponseModel data) => json.encode(data.toJson());
-
 class ClientOrderResponseModel {
   int? responseCode;
   String? responseMessage;
@@ -24,12 +14,6 @@ class ClientOrderResponseModel {
         responseMessage: json["response_message"],
         responseData: json["response_data"] == null ? null : Orders.fromJson(json["response_data"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "response_code": responseCode,
-        "response_message": responseMessage,
-        "response_data": responseData?.toJson(),
-      };
 }
 
 class Orders {
@@ -45,57 +29,52 @@ class Orders {
         ordersCount: json["orders_count"],
         orders: json["orders"] == null ? [] : List<Order>.from(json["orders"]!.map((x) => Order.fromJson(x))),
       );
-
-  Map<String, dynamic> toJson() => {
-        "orders_count": ordersCount,
-        "orders": orders == null ? [] : List<dynamic>.from(orders!.map((x) => x.toJson())),
-      };
 }
 
 class Order {
-  String? id;
+  String? orderId;
   String? orderCode;
   String? createdAt;
   String? orderStatus;
   String? statusName;
   String? clientName;
   String? marketName;
-  String? totalPrice;
-  String? totalQuantity;
+  String? mobile;
+  String? title;
+  String? address;
+  String? location;
+  String? areaName;
+  String? doorPhoto;
 
   Order({
-    this.id,
+    this.orderId,
     this.orderCode,
     this.createdAt,
     this.orderStatus,
     this.statusName,
     this.clientName,
     this.marketName,
-    this.totalPrice,
-    this.totalQuantity,
+    this.address,
+    this.location,
+    this.areaName,
+    this.doorPhoto,
+    this.mobile,
+    this.title,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
-        id: json["id"],
+        orderId: json["order_id"],
         orderCode: json["order_code"],
         createdAt: json["created_at"],
         orderStatus: json["order_status"],
         statusName: json["status_name"],
         clientName: json["client_name"],
         marketName: json["market_name"],
-        totalPrice: json["total_price"],
-        totalQuantity: json["total_quantity"],
+        mobile: json["mobile"],
+        title: json["title"],
+        address: json["address"],
+        location: json["location"],
+        areaName: json["area_name"],
+        doorPhoto: json["door_photo"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "order_code": orderCode,
-        "created_at": createdAt,
-        "order_status": orderStatus,
-        "status_name": statusName,
-        "client_name": clientName,
-        "market_name": marketName,
-        "total_price": totalPrice,
-        "total_quantity": totalQuantity,
-      };
 }

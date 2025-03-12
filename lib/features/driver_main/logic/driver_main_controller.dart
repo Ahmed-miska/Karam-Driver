@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:karam_driver/core/widgets/custom_snack_bar.dart';
+import 'package:karam_driver/features/client_orders/logic/client_orders_controller.dart';
 import 'package:karam_driver/features/driver_main/data/models/change_order_status_request_model.dart';
 import 'package:karam_driver/features/driver_main/data/models/client_search_response_model.dart';
 import 'package:karam_driver/features/driver_main/data/repos/driver_main_repo.dart';
@@ -29,6 +30,10 @@ class DriverMainController extends GetxController {
     if (response.response != null && response.response!.statusCode == 200) {
       if (response.response!.data['response_code'] == 200) {
         clientSearchResponseData = ClientSearchResponseData.fromJson(response.response!.data['response_data']);
+        Get.find<ClientOrdersController>().page = 1;
+        Get.find<ClientOrdersController>().orders = [];
+        await Get.find<ClientOrdersController>().getOrders(Get.find<ClientOrdersController>().activeStep.toString());
+        Get.back();
         isLoading.value = false;
         isError.value = false;
         error.value = '';
