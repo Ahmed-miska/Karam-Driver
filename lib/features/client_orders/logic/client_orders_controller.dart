@@ -149,4 +149,10 @@ class ClientOrdersController extends GetxController {
     } else {}
     return response;
   }
+
+  Future<void> restart(){
+    page = 1;
+    orders = [];
+    return  getOrders(activeStep.toString());
+  }
 }

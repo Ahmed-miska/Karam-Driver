@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:karam_driver/core/helpers/binging_helper.dart';
 import 'package:karam_driver/core/helpers/save_user_data.dart';
 import 'package:karam_driver/core/widgets/app_text_button.dart';
@@ -10,8 +8,6 @@ import 'package:karam_driver/core/widgets/cached_network_image.dart';
 import 'package:karam_driver/core/widgets/custom_open_icon.dart';
 import 'package:karam_driver/features/driver_main/data/models/change_order_status_request_model.dart';
 import 'package:karam_driver/features/driver_main/logic/driver_main_controller.dart';
-
-import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/functions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theming/colors.dart';
@@ -90,6 +86,14 @@ class OrderItemClientOrder extends StatelessWidget {
               ),
               const Spacer(),
               Text(': الموقع', style: AppStyles.font15Black500),
+            ],
+          ),
+          verticalSpace(10),
+          Row(
+            children: [
+              Text(order.nearstReferencePoint ?? '', style: AppStyles.font14Black400),
+              const Spacer(),
+              Text(': اقرب نقطه داله', style: AppStyles.font15Black500),
             ],
           ),
           verticalSpace(20),

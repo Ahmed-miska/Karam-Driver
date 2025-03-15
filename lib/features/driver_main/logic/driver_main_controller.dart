@@ -85,6 +85,7 @@ class DriverMainController extends GetxController {
       if (response.response!.data['response_code'] == 200) {
         Get.back();
         customSnackbar('تم تحميل الصورة بنجاح', response.response!.data['response_message']);
+        Get.find<ClientOrdersController>().restart();
       } else {
         customSnackbar('خطا', response.response!.data['response_message']);
       }
