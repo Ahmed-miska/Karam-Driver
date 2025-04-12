@@ -9,7 +9,6 @@ import 'package:karam_driver/core/theming/styles.dart';
 import 'package:karam_driver/core/widgets/app_text_button.dart';
 import 'package:karam_driver/core/widgets/app_text_form_field.dart';
 import 'package:karam_driver/features/driver_main/logic/driver_main_controller.dart';
-import 'package:karam_driver/features/driver_main/ui/widgets/customer_details.dart';
 
 class SearchCustomerBottomSheet extends StatefulWidget {
   const SearchCustomerBottomSheet({super.key});

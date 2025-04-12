@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../theming/colors.dart';
 import '../theming/styles.dart';
 
-
 void customSnackbar(
   String title,
   String message, {
@@ -45,7 +44,7 @@ void customSnackbar(
   Get.snackbar(
     title,
     message,
-    titleText: Center(child: Text(title, textAlign: TextAlign.center, style: AppStyles.font14White500)),
+    // titleText: Center(child: Text(title, textAlign: TextAlign.center, style: AppStyles.font14White500)),
     messageText: Center(child: Text(message, textAlign: TextAlign.center, style: AppStyles.font14White500)),
     colorText: colorText,
     duration: duration,

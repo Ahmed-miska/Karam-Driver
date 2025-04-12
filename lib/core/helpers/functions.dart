@@ -73,13 +73,18 @@ void openMap(String destinationLat, String destinationLong) async {
   try {
     String googleMapsUrl = 'https://www.google.com/maps/search/?api=1&query=$destinationLat,$destinationLong';
     String appleMapsUrl = 'http://maps.apple.com/?q=$destinationLat,$destinationLong';
-
     String mapUrl = GetPlatform.isIOS ? appleMapsUrl : googleMapsUrl;
 
-    if (await canLaunchUrl(Uri.parse(mapUrl))) {
-      await launchUrl(Uri.parse(mapUrl), mode: LaunchMode.externalApplication);
+    if (kIsWeb) {
+      // في الويب، افتح الرابط باستخدام JavaScript
+      js.context.callMethod('open', [mapUrl]);
     } else {
-      customSnackbar("خطأ", "لا يمكننا فتح الخريطة");
+      // في الموبايل العادي، استخدم launchUrl
+      if (await canLaunchUrl(Uri.parse(mapUrl))) {
+        await launchUrl(Uri.parse(mapUrl), mode: LaunchMode.externalApplication);
+      } else {
+        customSnackbar("خطأ", "لا يمكننا فتح الخريطة");
+      }
     }
   } catch (e) {
     Get.snackbar("Error", "حدث خطأ أثناء محاولة فتح الخريطة: $e", colorText: Colors.red);
