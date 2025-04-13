@@ -42,7 +42,8 @@ class Order {
   String? mobile;
   String? title;
   String? address;
-  String? location;
+  String? clientLocation;
+  String? marketLocation;
   String? areaName;
   String? nearstReferencePoint;
   String? doorPhoto;
@@ -57,7 +58,8 @@ class Order {
     this.marketName,
     this.address,
     this.nearstReferencePoint,
-    this.location,
+    this.clientLocation,
+    this.marketLocation,
     this.areaName,
     this.doorPhoto,
     this.mobile,
@@ -76,7 +78,8 @@ class Order {
         mobile: json["mobile"],
         title: json["title"],
         address: json["address"],
-        location: json["location"],
+        clientLocation: json["client_location"],
+        marketLocation: json["market_location"],
         areaName: json["area_name"],
         doorPhoto: json["door_photo"],
       );

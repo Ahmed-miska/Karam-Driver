@@ -18,6 +18,7 @@ void main() async {
     WebViewPlatform.instance = WebWebViewPlatform();
   }
   runApp(const MyApp());
+  
 }
 
 class MyApp extends StatefulWidget {

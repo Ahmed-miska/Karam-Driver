@@ -76,10 +76,18 @@ class OrderItemClientOrder extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  if (order.location != null) {
-                    String lat = order.location!.split(',')[0];
-                    String long = order.location!.split(',')[1];
-                    openMap(lat, long);
+                  if (order.clientLocation != null && order.clientLocation!.isNotEmpty && order.marketLocation != null && order.marketLocation!.isNotEmpty) {
+                    String clientLat = order.clientLocation!.split(',')[0];
+                    String clientLong = order.clientLocation!.split(',')[1];
+                    String marketLat = order.marketLocation!.split(',')[0];
+                    String marketLong = order.marketLocation!.split(',')[1];
+                    //openMap(lat, long);
+                    openMapRoute(
+                      originLat: marketLat,
+                      originLong: marketLong,
+                      destinationLat: clientLat,
+                      destinationLong: clientLong,
+                    );
                   }
                 },
                 child: Text('عرض الموقع', style: AppStyles.font14Main500),

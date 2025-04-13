@@ -92,7 +92,36 @@ void openMap(String destinationLat, String destinationLong) async {
     Get.back(); // إغلاق مؤشر التحميل سواء نجحت العملية أو فشلت
   }
 }
+void openMapRoute({
+  required String originLat,
+  required String originLong,
+  required String destinationLat,
+  required String destinationLong,
+}) async {
+  Get.dialog(const Center(child: CircularProgressIndicator()), barrierDismissible: false);
 
+  try {
+    String googleMapsUrl = 'https://www.google.com/maps/dir/?api=1&origin=$originLat,$originLong&destination=$destinationLat,$destinationLong';
+
+    String appleMapsUrl = 'http://maps.apple.com/?saddr=$originLat,$originLong&daddr=$destinationLat,$destinationLong';
+
+    String mapUrl = GetPlatform.isIOS ? appleMapsUrl : googleMapsUrl;
+
+    if (kIsWeb) {
+      js.context.callMethod('open', [mapUrl]);
+    } else {
+      if (await canLaunchUrl(Uri.parse(mapUrl))) {
+        await launchUrl(Uri.parse(mapUrl), mode: LaunchMode.externalApplication);
+      } else {
+        customSnackbar("خطأ", "لا يمكننا فتح الخريطة");
+      }
+    }
+  } catch (e) {
+    Get.snackbar("Error", "حدث خطأ أثناء محاولة فتح الخريطة: $e", colorText: Colors.red);
+  } finally {
+    Get.back();
+  }
+}
 void shareLink(String url) async {
   await Share.share(url, subject: 'Check out this link!');
 }
