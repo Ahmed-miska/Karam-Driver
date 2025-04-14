@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> {
           routingCallback: (routing) {
             print('Previous route: ${routing?.previous}');
             print('Current route: ${routing?.current}');
+            
           },
           initialRoute: AppRoutes.signInPage,
           initialBinding: InitBinding(),
